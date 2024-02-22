@@ -35,4 +35,4 @@ jobs:
           # Replace '/Applications/Unity Hub.app/Contents/MacOS/Unity' with the actual path to the Unity executable
           /Applications/Unity\ Hub.app/Contents/MacOS/Unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/test1 -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile build.log
 
-      # Add other steps for testing, deploying, or other tasks as needed
+      # Add other steps for testing, deploying, or other tasks as neededs
