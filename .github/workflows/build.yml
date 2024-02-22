@@ -22,7 +22,7 @@ jobs:
         run: |
           hdiutil attach UnityHub.dmg
           sudo cp -R /Volumes/Unity\ Hub\ 3.7.0/Unity\ Hub.app /Applications/
-          hdiutil detach /Volumes/Unity\ Hub
+          hdiutil detach /Volumes/Unity\ Hub\ 3.7.0
 
       - name: Install Dependencies
         run: |
