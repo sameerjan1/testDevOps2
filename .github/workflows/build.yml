@@ -1,1 +1,39 @@
+name: Build test1
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: test1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Unity
+        uses: game-ci/setup-unity@v1
+        with:
+          unity-version: 2022.3.11f1  # Specify the Unity version you are using
+
+      - name: Install Dependencies
+        run: |
+          # Install any dependencies required for your Unity project
+          # For example, you might need to install Node.js, npm packages, etc.
+
+      - name: Build Unity Project
+        run: |
+          # Execute the Unity command line to build the project
+          # Replace 'ProjectName' with the actual name of your Unity project
+          # Modify the build options as needed (e.g., platform, build path)
+          unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/ProjectName -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile build.log
+
+      - name: Archive Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: $GITHUB_WORKSPACE/Builds  # Path to the directory containing build artifacts
 
