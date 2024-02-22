@@ -16,10 +16,12 @@ jobs:
 
       - name: Set up Unity
         run: |
-          wget -nv https://public-cdn.cloud.unity3d.com/hub/prod/UnityHub.AppImage -O UnityHub.AppImage
-          chmod +x UnityHub.AppImage
-          ./UnityHub.AppImage install-editor --version 2022.3.11f1 --include-docs --platform linux
-          rm UnityHub.AppImage
+          curl -o UnityHubSetup.AppImage https://public-cdn.cloud.unity3d.com/hub/prod/UnityHub.AppImage
+          chmod +x UnityHubSetup.AppImage
+          ./UnityHubSetup.AppImage --install-location=$HOME/UnityHub --unattended
+
+      - name: Install Unity Editor
+        run: $HOME/UnityHub/UnityHub.AppImage unityhub://install/2022.3.11f1
 
       - name: Install Dependencies
         run: |
@@ -31,4 +33,4 @@ jobs:
           # Execute the Unity command line to build the project
           # Replace 'ProjectName' with the actual name of your Unity project
           # Modify the build options as needed (e.g., platform, build path)
-          unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/test1 -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile b
+          unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/test1 -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile build.log
