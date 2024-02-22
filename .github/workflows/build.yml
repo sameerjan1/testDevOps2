@@ -20,8 +20,9 @@ jobs:
 
       - name: Install Unity Hub
         run: |
+          mkdir -p $GITHUB_WORKSPACE/Applications
           hdiutil attach UnityHub.dmg
-          sudo cp -R /Volumes/Unity\ Hub\ 3.7.0/Unity\ Hub.app ../Applications/
+          cp -R /Volumes/Unity\ Hub\ 3.7.0/Unity\ Hub.app $GITHUB_WORKSPACE/Applications/
           hdiutil detach /Volumes/Unity\ Hub\ 3.7.0
 
       - name: Install Dependencies
@@ -32,7 +33,7 @@ jobs:
       - name: Build Unity Project
         run: |
           # Execute the Unity command line to build the project
-          # Replace '/Applications/Unity Hub.app/Contents/MacOS/Unity' with the actual path to the Unity executable
-          ../Applications/Unity\ Hub.app/Contents/MacOS/Unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/test1 -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile build.log
+          # Adjust the path to Unity executable and project directory
+          $GITHUB_WORKSPACE/Applications/Unity\ Hub.app/Contents/MacOS/Unity -quit -batchmode -projectPath $GITHUB_WORKSPACE/test1 -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile $GITHUB_WORKSPACE/build.log
 
-      # Add other steps for testing, deploying, or other tasks as neededs
+      # Add other steps for testing, deploying, or other tasks as needed
