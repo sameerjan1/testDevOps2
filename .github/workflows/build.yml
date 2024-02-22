@@ -33,5 +33,6 @@ jobs:
       - name: Build Unity Project
         run: |
           # Execute the Unity command line to build the project
-          # Adjust the path to Unity executable and project directory
-          "$GITHUB_WORKSPACE/Applications/Unity Hub.app/Contents/MacOS/Unity" -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -
+          "/Applications/Unity Hub.app/Contents/MacOS/Unity Hub" -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+
+      # Add other steps for testing, deploying, or other tasks as needed
