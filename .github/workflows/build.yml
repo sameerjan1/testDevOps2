@@ -21,7 +21,7 @@ jobs:
       - name: Install Unity Hub
         run: |
           hdiutil attach UnityHub.dmg
-          sudo installer -pkg /Volumes/Unity\ Hub/Unity\ Hub.pkg -target /
+          sudo cp -R /Volumes/Unity\ Hub\ 3.7.0/Unity\ Hub.app /Applications/
           hdiutil detach /Volumes/Unity\ Hub
 
       - name: Install Dependencies
