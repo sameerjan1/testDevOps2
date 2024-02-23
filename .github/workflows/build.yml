@@ -35,6 +35,6 @@ jobs:
       - name: Build Unity Project
         run: |
           # Execute the Unity command line to build the project
-          "Unity Hub" -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+          Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
       # Add other steps for testing, deploying, or other tasks as needed
