@@ -32,6 +32,10 @@ jobs:
           # Add commands here to install any dependencies required for your Unity project
           # For example, you might need to install Node.js, npm packages, etc.
 
+      - name: Set PATH for Unity Hub
+        run: |
+          export PATH="$HOME/Applications/Unity Hub.app/Contents/MacOS:$PATH"
+
       - name: Build Unity Project
         run: |
           # Execute the Unity command line to build the project
