@@ -11,24 +11,23 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Download and Install Unity Hub
-        run: |
-          curl -o UnityHub.dmg https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
-          hdiutil attach UnityHub.dmg
-          cp -R "/Volumes/Unity Hub 3.7.0/Unity Hub.app" /Applications/
-          hdiutil detach "/Volumes/Unity Hub 3.7.0"
-          export PATH="/Applications/Unity Hub.app/Contents/MacOS:$PATH"
+    # Pre-install Unity Hub on a dedicated runner (not shown in this script)
 
-      - name: Install Dependencies
-        run: |
-          # Add commands here to install any dependencies required for your Unity project
-          # For example, you might need to install Node.js, npm packages, etc.
+    - name: Set Unity Hub path (assuming pre-installation)
+      run: |
+        export PATH="$HOME/.local/bin:$PATH"  # Replace with your pre-installed Unity Hub path
+        echo "UNITY_HUB_PATH=$HOME/.local/bin/unityhub"  # Replace with your pre-installed Unity Hub path
 
-      - name: Build Unity Project
-        run: |
-          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+    - name: Install Dependencies
+      run: |
+        # Add commands here to install any dependencies required for your Unity project
+        # For example, you might need to install Node.js, npm packages, etc.
 
-      # Add other steps for testing, deploying, or other tasks as needed
+    - name: Build Unity Project
+      run: |
+        $UNITY_HUB_PATH -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+
+    # Add other steps for testing, deploying, or other tasks as needed
