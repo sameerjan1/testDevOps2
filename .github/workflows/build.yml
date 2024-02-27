@@ -26,8 +26,10 @@ jobs:
         # Add commands here to install any dependencies required for your Unity project
         # For example, you might need to install Node.js, npm packages, etc.
 
-    - name: Build Unity Project
+    - name: Build Unity Project (with shebang line and `sh` interpreter)
       run: |
-        $UNITY_HUB_PATH --quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+        #!/bin/bash  # Added shebang line
+
+        sh $UNITY_HUB_PATH --quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
     # Add other steps for testing, deploying, or other tasks as needed
