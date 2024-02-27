@@ -14,10 +14,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Download Unity Hub AppImage
+      - name: Download Unity Editor
         run: |
-          curl -o UnityHub.AppImage https://public-cdn.cloud.unity3d.com/hub/prod/UnityHub.AppImage
-          chmod +x UnityHub.AppImage
+          curl -o UnityInstaller.sh https://public-cdn.cloud.unity3d.com/hub/prod/UnitySetup-2020.3.10f1
+          chmod +x UnityInstaller.sh
+          ./UnityInstaller.sh --install-location=./Unity --components Unity,Windows-Mono,Linux-Mono,WebGL
 
       - name: Install Dependencies
         run: |
@@ -26,6 +27,6 @@ jobs:
 
       - name: Build Unity Project for StandaloneLinux64
         run: |
-          ./UnityHub.AppImage -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+          ./Unity/Editor/Unity -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
       # Add other steps for testing, deploying, or other tasks as needed.
