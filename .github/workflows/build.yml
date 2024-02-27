@@ -29,7 +29,7 @@ jobs:
 
     - name: Build Unity Project (using open, if allowed)
       run: |
-        #!/bin/bash  # Added shebang line
+        ls -l /Applications/Unity\ Hub.app
 
         open -a "Unity Hub.app" --args --quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
