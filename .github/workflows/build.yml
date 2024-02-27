@@ -8,29 +8,27 @@ on:
 jobs:
   build:
     name: Build and Test Unity Project
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Unity Editor
+      - name: Download and Install Unity Hub
         run: |
-          # Download Unity Hub AppImage
-          curl -o UnityHub.AppImage https://public-cdn.cloud.unity3d.com/hub/prod/UnityHub.AppImage
-          chmod +x UnityHub.AppImage
-
-          # Run Unity Hub to install the desired version of Unity Editor
-          ./UnityHub.AppImage -quit -batchmode -nographics -logFile ./unity_hub_install.log -import-package ./unityhub_editor_package.json
+          curl -o UnityHub.dmg https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
+          hdiutil attach UnityHub.dmg
+          cp -R "/Volumes/Unity Hub 3.7.0/Unity Hub.app" /Applications/
+          hdiutil detach "/Volumes/Unity Hub 3.7.0"
+          export PATH="/Applications/Unity Hub.app/Contents/MacOS:$PATH"
 
       - name: Install Dependencies
         run: |
           # Add commands here to install any dependencies required for your Unity project
           # For example, you might need to install Node.js, npm packages, etc.
 
-      - name: Build Unity Project for StandaloneLinux64
+      - name: Build Unity Project
         run: |
-          # Use installed Unity Editor to build the project
-          /root/Unity/Editor/Unity -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
-      # Add other steps for testing, deploying, or other tasks as needed.
+      # Add other steps for testing, deploying, or other tasks as needed
