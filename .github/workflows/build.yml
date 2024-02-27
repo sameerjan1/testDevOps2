@@ -8,13 +8,13 @@ on:
 jobs:
   build:
     name: Build and Test Unity Project
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Download Unity Hub
+      - name: Download and Install Unity Hub
         run: |
           curl -o UnityHub.dmg https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
           hdiutil attach UnityHub.dmg
@@ -27,11 +27,9 @@ jobs:
           # Add commands here to install any dependencies required for your Unity project
           # For example, you might need to install Node.js, npm packages, etc.
 
-      - name: Build Unity Project
+      - name: Build Unity Project for StandaloneLinux64
         run: |
-          # Ensure Unity Hub is in PATH
           export PATH="/Applications/Unity Hub.app/Contents/MacOS:$PATH"
-          # Build Unity project using Unity Hub
           Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
       # Add other steps for testing, deploying, or other tasks as needed.
