@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Download and Install Unity Hub
+      - name: Download Unity Hub
         run: |
           curl -o UnityHub.dmg https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
           hdiutil attach UnityHub.dmg
@@ -29,6 +29,9 @@ jobs:
 
       - name: Build Unity Project
         run: |
-          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
+          # Ensure Unity Hub is in PATH
+          export PATH="/Applications/Unity Hub.app/Contents/MacOS:$PATH"
+          # Build Unity project using Unity Hub
+          Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
       # Add other steps for testing, deploying, or other tasks as needed.
