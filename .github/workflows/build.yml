@@ -1,35 +1,34 @@
-name: Build and Test Unity Project
+name: Build test1
 
 on:
   push:
     branches:
-      - main  # Replace with your desired branch
+      - main
 
 jobs:
-  build-and-test:
-    runs-on: macos-latest  # Replace with the desired runner OS (Windows or Linux)
+  build:
+    name: Build and Test Unity Project
+    runs-on: macos-latest
+
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set environment variables
-      run: |
-        # Replace with actual path to Unity Hub and project directory
-        export UNITY_HUB_PATH=/path/to/unityhub
-        export PROJECT_DIR="$GITHUB_WORKSPACE/your_project_name"
-        echo "UNITY_HUB_PATH=$UNITY_HUB_PATH"
-        echo "PROJECT_DIR=$PROJECT_DIR"
+      - name: Download and Install Unity Hub
+        run: |
+          curl -o UnityHub.dmg https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
+          hdiutil attach UnityHub.dmg
+          cp -R "/Volumes/Unity Hub 3.7.0/Unity Hub.app" /Applications/
+          hdiutil detach "/Volumes/Unity Hub 3.7.0"
+          export PATH="/Applications/Unity Hub.app/Contents/MacOS:$PATH"
 
-    - name: Install Dependencies (optional)
-      run: |
-        # Add commands here to install any dependencies required for your project
-        # For example, npm install
+      - name: Install Dependencies
+        run: |
+          # Add commands here to install any dependencies required for your Unity project
+          # For example, you might need to install Node.js, npm packages, etc.
 
-    - name: Build Unity Project
-      run: |
-        $UNITY_HUB_PATH -batchmode -projectPath "$PROJECT_DIR" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$PROJECT_DIR/build.log"
+      - name: Build Unity Project
+        run: |
+          /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
-    - name: Run Unity Tests (optional)
-      # ... (insert your specific test commands here)
-
-    # Add other steps for deployment or further tasks as needed
-
+      # Add other steps for testing, deploying, or other tasks as needed
