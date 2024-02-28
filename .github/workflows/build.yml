@@ -1,40 +1,34 @@
-
-name: Build test1
+name: Build and Test Unity Project
 
 on:
   push:
     branches:
-      - main
+      - main  # Replace with your desired branch
 
 jobs:
   build:
-    name: Build and Test Unity Project
-    runs-on: macos-latest
-
+    runs-on: macos-latest  # Replace with the desired runner OS (Windows or Linux)
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    # Pre-install Unity Hub on a dedicated runner (not shown in this script)
+    # Pre-install Unity Hub on a dedicated runner with proper access permissions (not shown in this script)
 
-    - name: Set Unity Hub path (assuming pre-installation)
+    - name: Set environment variables
       run: |
-        export PATH="$HOME/.local/bin:$PATH"  # Replace with your pre-installed Unity Hub path
-        echo "UNITY_HUB_PATH=$HOME/.local/bin/unityhub"  # Replace with your pre-installed Unity Hub path
+        # Replace with actual path to Unity Hub and project directory
+        export UNITY_HUB_PATH=/path/to/unityhub
+        export PROJECT_DIR="$GITHUB_WORKSPACE/your_project_name"
+        echo "UNITY_HUB_PATH=$UNITY_HUB_PATH"
+        echo "PROJECT_DIR=$PROJECT_DIR"
 
-    - name: Install Dependencies
+    - name: Install Dependencies (optional)
       run: |
-        # Add commands here to install any dependencies required for your Unity project
-        # For example, you might need to install Node.js, npm packages, etc.
+        # Add commands here to install any dependencies required for your project
+        # For example, npm install
 
-    - name: Build Unity Project (using open, if allowed)
+    - name: Build Unity Project
       run: |
-        ls -l /Applications/Unity\ Hub.app
+        $UNITY_HUB_PATH --quit -batchmode -projectPath "$PROJECT_DIR" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$PROJECT_DIR/build.log"
 
-        open -a "Unity Hub.app" --args --quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
-
-    # Add other steps for testing, deploying, or other tasks as needed.
-    
-
-
+    # Add other steps for testing, deploying, or other tasks as needed
 
