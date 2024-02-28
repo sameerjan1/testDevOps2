@@ -6,7 +6,7 @@ on:
       - main  # Replace with your desired branch
 
 jobs:
-  build:
+  build-and-test:
     runs-on: macos-latest  # Replace with the desired runner OS (Windows or Linux)
     steps:
     - uses: actions/checkout@v3
@@ -28,7 +28,14 @@ jobs:
 
     - name: Build Unity Project
       run: |
-        $UNITY_HUB_PATH --quit -batchmode -projectPath "$PROJECT_DIR" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$PROJECT_DIR/build.log"
+        $UNITY_HUB_PATH quit -batchmode -projectPath "$PROJECT_DIR" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$PROJECT_DIR/build.log"
 
-    # Add other steps for testing, deploying, or other tasks as needed
+    - name: Run Unity Tests (optional)
+      run: |
+        # Add commands here to run your Unity test suite
+        # For example, suitable commands for different testing frameworks:
+        # > Unity Test Runner: $UNITY_HUB_PATH --test-projectPath "$PROJECT_DIR" -testResults "$PROJECT_DIR/test_results.xml" -testBatchMode -testPlatform StandaloneLinux64
+        # > NUnit: nunit3 $PROJECT_DIR/Tests/bin/Debug/Unity.TestFramework.NUnit.dll
+
+    # Add other steps for deployment or further tasks as needed
 
