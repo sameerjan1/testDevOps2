@@ -33,7 +33,8 @@ jobs:
 
         open -a "Unity Hub.app" --args --quit -batchmode -projectPath "$GITHUB_WORKSPACE/test1" -buildTarget StandaloneLinux64 -executeMethod UnityEditor.BuildPlayerWindow+BuildMethod.BuildPlayer -logFile "$GITHUB_WORKSPACE/build.log"
 
-    # Add other steps for testing, deploying, or other tasks as needed
+    # Add other steps for testing, deploying, or other tasks as needed.
+    
 
 
 
