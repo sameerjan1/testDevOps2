@@ -1,51 +1,23 @@
-name: Unity CI/CD Pipeline  # Define workflow name
+name: Unity Test Runner  # Replace with a descriptive name
 
-on:
+on:  # Define event triggers (e.g., push, pull_request)
   push:
-    branches: [ main ]  # Trigger on push events to the "main" branch
+    branches: [ main ]  # Example trigger on pushes to the "main" branch
 
 jobs:
-  build-and-test:  # Define job name
+  test:  # Replace with a descriptive name for the job
     runs-on: ubuntu-latest  # Specify runner environment
 
     steps:
       - uses: actions/checkout@v3  # Checkout code from repository
 
-      - name: Use Unity Hub
-        uses: game-ci/unity-actions@v4
-        with:
-          version: ${{ secrets.UNITY_HUB_VERSION }}  # Replace with your secret name
+      # Add your additional steps here if needed (e.g., install dependencies)
 
-      - name: Set Unity License
+      - uses: game-ci/unity-test-runner@v4  # Run Unity tests
         env:
-          UNITY_LICENSE: ${{ runner.workspace }}/UnityLicense.txt  # Use temporary license file
-        run: |
-          echo $UNITY_LICENSE > ${{ github.workspace }}/UnityLicense.txt  # Store license in temporary file
-
-      - name: Cache Unity Editor
-        uses: actions/cache@v3
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          path: ${{ runner.os }}-unity-${{ secrets.UNITY_HUB_VERSION }}
-          key: ${{ runner.os }}-unity-${{ secrets.UNITY_HUB_VERSION }}-${{ hashFiles('Packages/manifest.json') }}  # Cache based on Unity version and project manifest
-          restore-keys: |
-            ${{ runner.os }}-unity-
+          projectPath: path/to/your/project
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download project from Unity Hub
-        run: |
-          unity -quit -batchmode -projectPath ${{ github.workspace }}/MyProject -downloadPath ${{ github.workspace }}/MyProject/Assets/Plugins/DownloadedUnity 
-          # Replace "MyProject" with your actual project name
-        env:
-          UNITY_LICENSE: ${{ runner.workspace }}/UnityLicense.txt  # Use temporary license file
-
-      - name: Run Unit Tests
-        run: |
-          unity -quit -batchmode -testMode PlayMode -projectPath ${{ github.workspace }}/MyProject 
-          # Replace "PlayMode" with "EditMode" if needed
-          # Refer to Unity documentation for additional test mode options
-
-      - name: Upload Test Results (optional)
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: ${{ github.workspace }}/Results.xml  # Replace with your test results file path
-
+      # Add more steps after running tests (e.g., upload results)
