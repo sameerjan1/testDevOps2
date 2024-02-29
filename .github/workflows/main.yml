@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest  # Specify runner environment
 
     steps:
-      - uses: actions/checkout@v3  # Checkout code from repository
+      - uses: actions/checkout@v4  # Checkout code from repository
 
       # Add your additional steps here if needed (e.g., install dependencies)
 
