@@ -1,18 +1,62 @@
-name: Get Unity license activation file 🔐
+name: Unity CI/CD
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
 
 jobs:
-  requestManualActivationFile:
-    name: Request manual activation file 🔑
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: game-ci/unity-request-activation-file@v2
-        id: getManualLicenseFile
-
-      - uses: actions/upload-artifact@v2
+      - name: Install Unity Hub
+        uses: crazy-max/gha-unity-version@v2
         with:
-          name: Manual Activation File
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          version: '2023.2.0f1'  # Replace with your desired version
+
+      - name: Install Unity
+        run: |
+          unity-hub install --version ${UNITY_VERSION}
+
+      - name: Set up Unity Editor
+        run: |
+          unity-hub cache --path /path/to/unity/cache
+          # Replace '/path/to/unity/cache' with your Unity cache path
+
+      - name: Include license file
+        uses: actions/download-artifact@v3
+        with:
+          name: Unity-License
+
+      - name: Build project
+        run: |
+          # ... your existing build commands ...
+          # Modify commands to reference the downloaded license file
+
+      - name: Run unit tests
+        run: |
+          # ... your existing test commands ...
+          # Modify commands to reference the downloaded license file
+
+      - name: Upload test results (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_results
+          path: test_results.xml
+
+# Add a separate job for uploading the license file manually
+
+jobs:
+  upload-license:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Upload license file
+        uses: actions/upload-artifact@v3
+        with:
+          name: Unity-License
+          path: path/to/your/license.ulf # Replace with the path to your license file
+
