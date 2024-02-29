@@ -48,15 +48,5 @@ jobs:
 
 # Add a separate job for uploading the license file manually
 
-jobs:
-  upload-license:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Upload license file
-        uses: actions/upload-artifact@v3
-        with:
-          name: Unity-License
-          path: path/to/your/license.ulf # Replace with the path to your license file
 
