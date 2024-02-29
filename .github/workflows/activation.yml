@@ -1,52 +1,21 @@
-name: Unity CI/CD
+name: Unity Test Runner  # Replace with a descriptive name
 
-on:
+on:  # Define event triggers (e.g., push, pull_request)
   push:
-    branches: [ main ]
-  pull_request:
+    branches: [ main ]  # Example trigger on pushes to the "main" branch
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+  test:  # Replace with a descriptive name for the job
+    runs-on: ubuntu-latest  # Specify runner environment
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3  # Checkout code from repository
 
-      - name: Install Unity Hub
-        uses: crazy-max/gha-unity-version@v2
+      # Add your additional steps here if needed (e.g., install dependencies)
+
+      - uses: game-ci/unity-test-runner@v4  # Run Unity tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          version: '2023.2.0f1'  # Replace with your desired version
-
-      - name: Install Unity
-        run: |
-          unity-hub install --version ${UNITY_VERSION}
-
-      - name: Set up Unity Editor
-        run: |
-          unity-hub cache --path /path/to/unity/cache
-          # Replace '/path/to/unity/cache' with your Unity cache path
-
-      - name: Include license file
-        uses: actions/download-artifact@v3
-        with:
-          name: Unity-License
-
-      - name: Build project
-        run: |
-          # ... your existing build commands ...
-          # Modify commands to reference the downloaded license file
-
-      - name: Run unit tests
-        run: |
-          # ... your existing test commands ...
-          # Modify commands to reference the downloaded license file
-
-      - name: Upload test results (optional)
-        uses: actions/upload-artifact@v3
-        with:
-          name: test_results
-          path: test_results.xml
-
-# Add a separate job for uploading the license file manually
-
-
-
+          projectPath: testDevOps2
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
