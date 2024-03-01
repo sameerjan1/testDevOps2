@@ -17,7 +17,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          projectPath: ./testDevOps2
+          projectPath: ${{ github.workspace }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       # Add more steps after running tests (e.g., upload results)
