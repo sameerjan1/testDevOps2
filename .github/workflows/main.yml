@@ -20,4 +20,4 @@ jobs:
           projectPath: ${{ github.workspace }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      # Add more steps after running tests (e.g., upload results)
+      # Add more steps after running tests (e.g., upload results).
