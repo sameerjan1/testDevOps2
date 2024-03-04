@@ -30,4 +30,4 @@ jobs:
        with:
              build-target: Android
              build-path: ./build.apk
-             project-path: ../testDevOps2
+             project-path: .
