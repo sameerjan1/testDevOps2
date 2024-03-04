@@ -9,7 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    
+
     steps:
+     - name: Navigate to Repository Root
+       run: cd ${{ github.workspace }}
      - name: Checkout project
        uses: actions/checkout@v4
 
@@ -18,7 +22,7 @@ jobs:
        env:
              ACTIONS_STEP_DEBUG: true
        with:
-            project-path: ./testDevOps2
+            project-path: .
             unity-modules: android
             
  
