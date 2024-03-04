@@ -17,28 +17,10 @@ jobs:
      - name: Checkout project
        uses: actions/checkout@v4
 
-     - name: Setup Unity
-       uses: kuler90/setup-unity@v1
-       env:
-             ACTIONS_STEP_DEBUG: true
-       with:
-            project-path: .
-            unity-modules: android
+     - name: Unity - Activate
+       uses: game-ci/unity-activate@v2.0.0
             
- 
-     - name: Activate Unity
-       uses: kuler90/activate-unity@v1
-       with:
-             unity-username: ${{ secrets.UNITY_EMAIL }}
-             unity-password: ${{ secrets.UNITY_PASSWORD }}
-             unity-authenticator-key: ${{ secrets.UNITY_LICENSE }}
 
-     - name: Build Unity
-       uses: kuler90/build-unity@v1
-       with:
-             build-target: Android
-             build-path: ./build.apk
-             project-path: .
-             log-level: debug
+     
 
              #mfmfmfmff
