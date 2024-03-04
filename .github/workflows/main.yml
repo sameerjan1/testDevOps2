@@ -23,7 +23,7 @@ jobs:
        env:
          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
        with:
-      
+         project-path: ./
          githubToken: ${{ secrets.GITHUB_TOKEN }}
             
             
