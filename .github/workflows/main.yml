@@ -22,7 +22,7 @@ jobs:
        env:
              ACTIONS_STEP_DEBUG: true
        with:
-            project-path: .
+            project-path: ./testDevOps2
             unity-modules: android
             
  
