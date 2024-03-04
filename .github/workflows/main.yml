@@ -16,6 +16,7 @@ jobs:
      - name: Setup Unity
        uses: kuler90/setup-unity@v1
        with:
+            project-path: .
             unity-modules: android
  
      - name: Activate Unity
