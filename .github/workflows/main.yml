@@ -15,9 +15,12 @@ jobs:
 
      - name: Setup Unity
        uses: kuler90/setup-unity@v1
+       env:
+             ACTIONS_STEP_DEBUG: true
        with:
             project-path: ${{github.workspace}}
             unity-modules: android
+            
  
      - name: Activate Unity
        uses: kuler90/activate-unity@v1
