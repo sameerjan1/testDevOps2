@@ -16,7 +16,7 @@ jobs:
      - name: Setup Unity
        uses: kuler90/setup-unity@v1
        with:
-            project-path: .
+            project-path: ${{github.workspace}}
             unity-modules: android
  
      - name: Activate Unity
