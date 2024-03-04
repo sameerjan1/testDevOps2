@@ -27,7 +27,7 @@ jobs:
             
  
      - name: Activate Unity
-       uses: gameci/activate-unity@v2
+       uses: game-ci/activate-unity@v2
        with:
              unity-username: ${{ secrets.UNITY_EMAIL }}
              unity-password: ${{ secrets.UNITY_PASSWORD }}
