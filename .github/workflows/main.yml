@@ -10,22 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+     - name: Checkout project
+       uses: actions/checkout@v2
 
-      - name: Set up Unity
-        uses: game-ci/setup-unity@v1
-        with:
-          unityVersion: 2022.3.11f1
-          components: Unity
-          
-      - name: Build Unity Project
-        run: |
-          mkdir Build
-          unity -quit -batchmode -projectPath . -executeMethod UnityEditor.BuildPipeline.BuildPlayer -logFile build.log
+     - name: Setup Unity
+       uses: kuler90/setup-unity@v1
+       with:
+            unity-modules: android
+ 
+     - name: Activate Unity
+       uses: kuler90/activate-unity@v1
+       with:
+             unity-username: ${{ secrets.UNITY_EMAIL }}
+             unity-password: ${{ secrets.UNITY_PASSWORD }}
+             unity-authenticator-key: ${{ secrets.UNITY_LICENSE }}
 
-      - name: Archive Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build
-          path: Build
+     - name: Build Unity
+       uses: kuler90/build-unity@v1
+       with:
+             build-target: Android
+             build-path: ./build.apk
