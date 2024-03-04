@@ -31,5 +31,6 @@ jobs:
              build-target: Android
              build-path: ./build.apk
              project-path: .
+             log-level: debug
 
              #mfmfmfmf
