@@ -1,4 +1,4 @@
-name: Echo Project Path
+name: View Folder Contents
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
       - main
 
 jobs:
-  echo_project_path:
+  view_folder_contents:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Echo Project Path
-        run: ls ${{ github.workspace }}
+      - name: View Contents of Folder
+        run: ls -l ${{ github.workspace }}/testDevOps2
 
