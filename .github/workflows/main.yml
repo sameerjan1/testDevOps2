@@ -1,4 +1,4 @@
-name: Unity Build
+name: Echo Project Path
 
 on:
   push:
@@ -6,18 +6,10 @@ on:
       - main
 
 jobs:
-  build:
+  echo_project_path:
     runs-on: ubuntu-latest
 
-    
-
-     steps:
+    steps:
       - name: Echo Project Path
-        run: echo "Project path: ${{ github.workspace }}"
-    
-            
-            
+        run: ls ${{ github.workspace }}
 
-     
-
-             #mfmfmfmff
