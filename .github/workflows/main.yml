@@ -11,5 +11,5 @@ jobs:
 
     steps:
       - name: View Contents of Folder
-        run: ls -l ${{ github.workspace }}/testDevOps2
+        run: ls -l ${{ github.workspace }}
 
