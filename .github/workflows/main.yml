@@ -12,7 +12,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
       - name: Print project path
-        run: echo ls -l ./testDevOps2
+        run: echo ls -l .
 
      # - name: Cache
       #  uses: actions/cache@v4
