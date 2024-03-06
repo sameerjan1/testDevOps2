@@ -1,14 +1,32 @@
-name: View Folder Contents
-
+name: Unity Build
 on:
   push:
     branches:
       - main
 
 jobs:
-  view_folder_contents:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: View Contents of Folder
-        run: ls -l /home/runner/work/testDevOps2
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Print project path
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
+     # - name: Cache
+      #  uses: actions/cache@v4
+      #  with:
+       #   path: ${{ github.workspace }}/testDevOps2 
+         
+
+     
+
+      - name: Test runner (Optional)
+        uses: game-ci/unity-test-runner@v4
+        if: ${{ success() }}  # Run tests only if the build was successful (optional)
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: ./testDevOps2
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
